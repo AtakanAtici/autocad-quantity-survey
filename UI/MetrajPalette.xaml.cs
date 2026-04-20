@@ -87,9 +87,9 @@ namespace BetonMetraj.UI
             var ed = doc.Editor;
             var opts = new PromptEntityOptions("\nBir çizim nesnesi seçin (Line, Polyline, Circle): ");
             opts.SetRejectMessage("\nGeçersiz nesne.");
-            opts.AddAllowedClass(typeof(Line), false);
-            opts.AddAllowedClass(typeof(Polyline), false);
-            opts.AddAllowedClass(typeof(Circle), false);
+            opts.AddAllowedClass(typeof(Line), true);
+            opts.AddAllowedClass(typeof(Polyline), true);
+            opts.AddAllowedClass(typeof(Circle), true);
 
             var res = ed.GetEntity(opts);
             if (res.Status != PromptStatus.OK) return;
@@ -138,7 +138,7 @@ namespace BetonMetraj.UI
             var ed = doc.Editor;
             var opts = new PromptEntityOptions("\nDöşeme alanı için kapalı Polyline seçin: ");
             opts.SetRejectMessage("\nYalnızca kapalı Polyline seçebilirsiniz.");
-            opts.AddAllowedClass(typeof(Polyline), false);
+            opts.AddAllowedClass(typeof(Polyline), true);
 
             var res = ed.GetEntity(opts);
             if (res.Status != PromptStatus.OK) return;
