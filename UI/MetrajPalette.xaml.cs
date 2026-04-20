@@ -85,14 +85,35 @@ namespace BetonMetraj.UI
             if (doc == null) { Durum("Açık AutoCAD belgesi bulunamadı."); return; }
 
             var ed = doc.Editor;
-            var opts = new PromptEntityOptions("\nLine, Polyline veya Circle seçin: ");
+            ed.WriteMessage("\n[BetonMetraj] Line, Polyline veya Circle seçin...\n");
+            Durum("AutoCAD'de nesne seçimi bekleniyor...");
 
+            Autodesk.AutoCAD.ApplicationServices.Core.Application.MainWindow.Focus();
+
+            var opts = new PromptEntityOptions("\nLine, Polyline veya Circle seçin: ");
             var res = ed.GetEntity(opts);
-            if (res.Status != PromptStatus.OK) return;
+
+            if (res.Status == PromptStatus.Cancel)
+            {
+                Durum("Seçim iptal edildi.");
+                return;
+            }
+            if (res.Status != PromptStatus.OK)
+            {
+                Durum($"Seçim hatası: {res.Status}");
+                return;
+            }
 
             using var tr = doc.Database.TransactionManager.StartTransaction();
             var entity = tr.GetObject(res.ObjectId, OpenMode.ForRead) as Entity;
-            if (entity == null) { tr.Abort(); return; }
+            if (entity == null)
+            {
+                Durum("Nesne okunamadı.");
+                tr.Abort();
+                return;
+            }
+
+            ed.WriteMessage($"\n[BetonMetraj] Seçilen: {entity.GetType().Name}\n");
 
             if (entity is not Line && entity is not Polyline && entity is not Circle)
             {
@@ -139,14 +160,34 @@ namespace BetonMetraj.UI
             if (doc == null) { Durum("Açık AutoCAD belgesi bulunamadı."); return; }
 
             var ed = doc.Editor;
-            var opts = new PromptEntityOptions("\nKapalı Polyline seçin: ");
+            ed.WriteMessage("\n[BetonMetraj] Kapalı Polyline seçin...\n");
+            Durum("AutoCAD'de polyline seçimi bekleniyor...");
 
+            Autodesk.AutoCAD.ApplicationServices.Core.Application.MainWindow.Focus();
+
+            var opts = new PromptEntityOptions("\nKapalı Polyline seçin: ");
             var res = ed.GetEntity(opts);
-            if (res.Status != PromptStatus.OK) return;
+
+            if (res.Status == PromptStatus.Cancel)
+            {
+                Durum("Seçim iptal edildi.");
+                return;
+            }
+            if (res.Status != PromptStatus.OK)
+            {
+                Durum($"Seçim hatası: {res.Status}");
+                return;
+            }
 
             using var tr = doc.Database.TransactionManager.StartTransaction();
-            var pline = tr.GetObject(res.ObjectId, OpenMode.ForRead) as Polyline;
-            if (pline == null || !pline.Closed)
+            var entity = tr.GetObject(res.ObjectId, OpenMode.ForRead) as Entity;
+            if (entity is not Polyline pline)
+            {
+                Durum("Polyline seçilmedi.");
+                tr.Abort();
+                return;
+            }
+            if (!pline.Closed)
             {
                 Durum("Kapalı bir Polyline seçilmedi.");
                 tr.Abort();
