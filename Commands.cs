@@ -44,7 +44,8 @@ namespace BetonMetraj
                 var host = new System.Windows.Forms.Integration.ElementHost
                 {
                     Child = palette,
-                    Dock = System.Windows.Forms.DockStyle.Fill
+                    Dock = System.Windows.Forms.DockStyle.Fill,
+                    AutoSize = true
                 };
 
                 _paletteSet.Add("Metraj", host);

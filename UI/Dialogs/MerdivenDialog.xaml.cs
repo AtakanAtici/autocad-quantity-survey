@@ -15,20 +15,17 @@ namespace BetonMetraj.UI.Dialogs
 
         private void BtnEkle_Click(object sender, RoutedEventArgs e)
         {
-            bool valid =
-                double.TryParse(txtGenislik.Text.Replace(",", "."), System.Globalization.NumberStyles.Any,
-                    System.Globalization.CultureInfo.InvariantCulture, out double genislik) && genislik > 0 &&
-                double.TryParse(txtKatYuksekligi.Text.Replace(",", "."), System.Globalization.NumberStyles.Any,
-                    System.Globalization.CultureInfo.InvariantCulture, out double katY) && katY > 0 &&
-                double.TryParse(txtPlakKalinligi.Text.Replace(",", "."), System.Globalization.NumberStyles.Any,
-                    System.Globalization.CultureInfo.InvariantCulture, out double plak) && plak > 0 &&
-                int.TryParse(txtBasamakSayisi.Text, out int sayi) && sayi > 0 &&
-                double.TryParse(txtBasamakYuksekligi.Text.Replace(",", "."), System.Globalization.NumberStyles.Any,
-                    System.Globalization.CultureInfo.InvariantCulture, out double basY) && basY > 0 &&
-                double.TryParse(txtBasamakGenisligi.Text.Replace(",", "."), System.Globalization.NumberStyles.Any,
-                    System.Globalization.CultureInfo.InvariantCulture, out double basG) && basG > 0;
+            var inv = System.Globalization.CultureInfo.InvariantCulture;
+            var any = System.Globalization.NumberStyles.Any;
 
-            if (!valid)
+            bool ok1 = double.TryParse(txtGenislik.Text.Replace(",", "."), any, inv, out double genislik) && genislik > 0;
+            bool ok2 = double.TryParse(txtKatYuksekligi.Text.Replace(",", "."), any, inv, out double katY) && katY > 0;
+            bool ok3 = double.TryParse(txtPlakKalinligi.Text.Replace(",", "."), any, inv, out double plak) && plak > 0;
+            bool ok4 = int.TryParse(txtBasamakSayisi.Text, out int sayi) && sayi > 0;
+            bool ok5 = double.TryParse(txtBasamakYuksekligi.Text.Replace(",", "."), any, inv, out double basY) && basY > 0;
+            bool ok6 = double.TryParse(txtBasamakGenisligi.Text.Replace(",", "."), any, inv, out double basG) && basG > 0;
+
+            if (!ok1 || !ok2 || !ok3 || !ok4 || !ok5 || !ok6)
             {
                 MessageBox.Show("Tüm değerleri doğru girin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
