@@ -85,11 +85,7 @@ namespace BetonMetraj.UI
             if (doc == null) { Durum("Açık AutoCAD belgesi bulunamadı."); return; }
 
             var ed = doc.Editor;
-            var opts = new PromptEntityOptions("\nBir çizim nesnesi seçin (Line, Polyline, Circle): ");
-            opts.SetRejectMessage("\nGeçersiz nesne.");
-            opts.AddAllowedClass(typeof(Line), true);
-            opts.AddAllowedClass(typeof(Polyline), true);
-            opts.AddAllowedClass(typeof(Circle), true);
+            var opts = new PromptEntityOptions("\nLine, Polyline veya Circle seçin: ");
 
             var res = ed.GetEntity(opts);
             if (res.Status != PromptStatus.OK) return;
@@ -97,6 +93,13 @@ namespace BetonMetraj.UI
             using var tr = doc.Database.TransactionManager.StartTransaction();
             var entity = tr.GetObject(res.ObjectId, OpenMode.ForRead) as Entity;
             if (entity == null) { tr.Abort(); return; }
+
+            if (entity is not Line && entity is not Polyline && entity is not Circle)
+            {
+                Durum("Seçilen nesne desteklenmiyor (Line, Polyline, Circle olmalı).");
+                tr.Abort();
+                return;
+            }
 
             DrawingUnit birim = SecilenBirim;
 
@@ -136,9 +139,7 @@ namespace BetonMetraj.UI
             if (doc == null) { Durum("Açık AutoCAD belgesi bulunamadı."); return; }
 
             var ed = doc.Editor;
-            var opts = new PromptEntityOptions("\nDöşeme alanı için kapalı Polyline seçin: ");
-            opts.SetRejectMessage("\nYalnızca kapalı Polyline seçebilirsiniz.");
-            opts.AddAllowedClass(typeof(Polyline), true);
+            var opts = new PromptEntityOptions("\nKapalı Polyline seçin: ");
 
             var res = ed.GetEntity(opts);
             if (res.Status != PromptStatus.OK) return;
