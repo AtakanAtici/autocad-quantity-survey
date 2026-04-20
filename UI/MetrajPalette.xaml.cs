@@ -248,13 +248,15 @@ namespace BetonMetraj.UI
 
         private void OzetGuncelle()
         {
-            lblTemel.Text   = $"{Session.HacimByTip(ElementType.Temel):F3} m³";
-            lblKolon.Text   = $"{Session.HacimByTip(ElementType.Kolon):F3} m³";
-            lblKiris.Text   = $"{Session.HacimByTip(ElementType.Kiris):F3} m³";
-            lblDoseme.Text  = $"{Session.HacimByTip(ElementType.Doseme):F3} m³";
-            lblPerde.Text   = $"{Session.HacimByTip(ElementType.PerdeDuvar):F3} m³";
-            lblMerdiven.Text= $"{Session.HacimByTip(ElementType.Merdiven):F3} m³";
-            lblToplam.Text  = $"{Session.ToplamHacim:F3} m³";
+            double tkk = Session.HacimByTip(ElementType.Temel)
+                       + Session.HacimByTip(ElementType.Kolon)
+                       + Session.HacimByTip(ElementType.Kiris);
+            double dpm = Session.HacimByTip(ElementType.Doseme)
+                       + Session.HacimByTip(ElementType.PerdeDuvar)
+                       + Session.HacimByTip(ElementType.Merdiven);
+            lblTemelKolonKiris.Text = $"{tkk:F2}";
+            lblDosemePerdeMerdiven.Text = $"{dpm:F2}";
+            lblToplam.Text = $"{Session.ToplamHacim:F2} m³";
         }
 
         private void Durum(string mesaj) => lblStatus.Text = mesaj;
