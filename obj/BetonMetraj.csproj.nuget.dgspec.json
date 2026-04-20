@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/atakanatici/Desktop/autocad-integration/BetonMetraj.csproj": {}
+  },
+  "projects": {
+    "/Users/atakanatici/Desktop/autocad-integration/BetonMetraj.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/atakanatici/Desktop/autocad-integration/BetonMetraj.csproj",
+        "projectName": "BetonMetraj",
+        "projectPath": "/Users/atakanatici/Desktop/autocad-integration/BetonMetraj.csproj",
+        "packagesPath": "/Users/atakanatici/.nuget/packages/",
+        "outputPath": "/Users/atakanatici/Desktop/autocad-integration/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/atakanatici/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "targetAlias": "net48",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "dependencies": {
+            "AutoCAD.NET": {
+              "target": "Package",
+              "version": "[24.3.0, )"
+            },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.2, )"
+            },
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.13/libexec/sdk/8.0.113/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

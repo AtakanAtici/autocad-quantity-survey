@@ -1,0 +1,80 @@
+<Window x:Class="BetonMetraj.UI.Dialogs.MerdivenDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Merdiven Girişi" Height="400" Width="440"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#F5F5F5">
+
+    <Window.Resources>
+        <Style TargetType="Label"><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Margin" Value="0,4,0,0"/></Style>
+        <Style TargetType="TextBox"><Setter Property="Padding" Value="4,3"/><Setter Property="Margin" Value="0,2,0,4"/><Setter Property="BorderBrush" Value="#AAAAAA"/></Style>
+        <Style TargetType="Button"><Setter Property="Padding" Value="16,6"/><Setter Property="Margin" Value="4"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Merdiven Bilgileri" FontSize="15" FontWeight="Bold"
+                   Foreground="#1565C0" Margin="0,0,0,10"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="Etiket:"/>
+            <Label Grid.Column="1" Grid.Row="0" Content="Kat:"/>
+            <TextBox Grid.Column="0" Grid.Row="1" x:Name="txtEtiket"/>
+            <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtKat" Text="Zemin"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Content="Genişlik (m):"/>
+            <Label Grid.Column="1" Grid.Row="0" Content="Kat Yüksekliği (m):"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="Plak Kalınlığı (m):"/>
+
+            <TextBox Grid.Column="0" Grid.Row="1" x:Name="txtGenislik"/>
+            <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtKatYuksekligi"/>
+            <TextBox Grid.Column="2" Grid.Row="1" x:Name="txtPlakKalinligi" Text="0.15"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Content="Basamak Sayısı:"/>
+            <Label Grid.Column="1" Grid.Row="0" Content="Basamak Yüks. (m):"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="Basamak Gen. (m):"/>
+
+            <TextBox Grid.Column="0" Grid.Row="1" x:Name="txtBasamakSayisi" Text="18"/>
+            <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtBasamakYuksekligi" Text="0.175"/>
+            <TextBox Grid.Column="2" Grid.Row="1" x:Name="txtBasamakGenisligi" Text="0.28"/>
+        </Grid>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="İptal" Click="BtnIptal_Click" Background="#E0E0E0"/>
+            <Button Content="Ekle" Click="BtnEkle_Click" Background="#1565C0" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>
