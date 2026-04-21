@@ -115,6 +115,15 @@ namespace BetonMetraj.UI
 
             ed.WriteMessage($"\n[BetonMetraj] Seçilen: {entity.GetType().Name}\n");
 
+            if (entity is BlockReference br)
+            {
+                var (lineCount, plineCount, circleCount, totalLength, totalArea) = ScanBlockGeometry(br, tr, doc.Database);
+                ed.WriteMessage($"\n[BetonMetraj] Blok içinde: {lineCount} Line, {plineCount} Polyline, {circleCount} Circle\n");
+                Durum($"Blok: {lineCount}L/{plineCount}P/{circleCount}C — Uzunluk:{totalLength:F2}m Alan:{totalArea:F2}m²");
+                tr.Commit();
+                return;
+            }
+
             if (entity is not Line && entity is not Polyline && entity is not Circle)
             {
                 Durum("Seçilen nesne desteklenmiyor (Line, Polyline, Circle olmalı).");
@@ -286,6 +295,48 @@ namespace BetonMetraj.UI
             _elemanlar.Add(e);
             OzetGuncelle();
             Durum($"{e.ElemanTipi} eklendi: {e.BetonHacmi:F3} m³");
+        }
+
+        private (int lineCount, int plineCount, int circleCount, double totalLength, double totalArea)
+            ScanBlockGeometry(BlockReference br, Transaction tr, Database db)
+        {
+            int lineCount = 0, plineCount = 0, circleCount = 0;
+            double totalLength = 0, totalArea = 0;
+            DrawingUnit birim = SecilenBirim;
+
+            if (br.BlockTableRecord == ObjectId.Null)
+                return (lineCount, plineCount, circleCount, totalLength, totalArea);
+
+            var btr = tr.GetObject(br.BlockTableRecord, OpenMode.ForRead) as BlockTableRecord;
+            if (btr == null) return (lineCount, plineCount, circleCount, totalLength, totalArea);
+
+            foreach (ObjectId id in btr)
+            {
+                if (id.IsNull) continue;
+                var ent = tr.GetObject(id, OpenMode.ForRead, false) as Entity;
+                if (ent == null) continue;
+
+                switch (ent)
+                {
+                    case Line line:
+                        lineCount++;
+                        totalLength += AcadGeometryHelper.ConvertToMeters(line.Length, birim);
+                        break;
+                    case Polyline pline:
+                        plineCount++;
+                        totalLength += AcadGeometryHelper.ConvertToMeters(pline.Length, birim);
+                        if (pline.Closed)
+                            totalArea += AcadGeometryHelper.ConvertToMeters(
+                                AcadGeometryHelper.ConvertToMeters(pline.Area, birim), birim);
+                        break;
+                    case Circle circle:
+                        circleCount++;
+                        totalArea += AcadGeometryHelper.ConvertToMeters(
+                            AcadGeometryHelper.ConvertToMeters(circle.Area, birim), birim);
+                        break;
+                }
+            }
+            return (lineCount, plineCount, circleCount, totalLength, totalArea);
         }
 
         private void OzetGuncelle()
