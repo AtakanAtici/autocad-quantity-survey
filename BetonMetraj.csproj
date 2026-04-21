@@ -29,10 +29,4 @@
     <PackageReference Include="ClosedXML" Version="0.102.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Include="UI\Dialogs\BlokDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
 </Project>
