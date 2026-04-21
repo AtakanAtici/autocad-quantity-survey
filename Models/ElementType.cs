@@ -7,7 +7,8 @@ namespace BetonMetraj.Models
         Kiris,
         Doseme,
         PerdeDuvar,
-        Merdiven
+        Merdiven,
+        Blok
     }
 
     public enum TemelTipi

@@ -119,8 +119,15 @@ namespace BetonMetraj.UI
             {
                 var (lineCount, plineCount, circleCount, totalLength, totalArea) = ScanBlockGeometry(br, tr, doc.Database);
                 ed.WriteMessage($"\n[BetonMetraj] Blok içinde: {lineCount} Line, {plineCount} Polyline, {circleCount} Circle\n");
-                Durum($"Blok: {lineCount}L/{plineCount}P/{circleCount}C — Uzunluk:{totalLength:F2}m Alan:{totalArea:F2}m²");
                 tr.Commit();
+
+                string blokBilgisi = $"{lineCount} Line, {plineCount} Polyline, {circleCount} Circle | Uzunluk:{totalLength:F1}m | Alan:{totalArea:F1}m²";
+                var dlg = new BlokDialog(totalArea, blokBilgisi);
+                if (dlg.ShowDialog() == true && dlg.Sonuc != null)
+                {
+                    dlg.Sonuc.AcadHandle = br.Handle.ToString();
+                    EkleVeGuncelle(dlg.Sonuc);
+                }
                 return;
             }
 
@@ -346,7 +353,8 @@ namespace BetonMetraj.UI
                        + Session.HacimByTip(ElementType.Kiris);
             double dpm = Session.HacimByTip(ElementType.Doseme)
                        + Session.HacimByTip(ElementType.PerdeDuvar)
-                       + Session.HacimByTip(ElementType.Merdiven);
+                       + Session.HacimByTip(ElementType.Merdiven)
+                       + Session.HacimByTip(ElementType.Blok);
             lblTemelKolonKiris.Text = $"{tkk:F2}";
             lblDosemePerdeMerdiven.Text = $"{dpm:F2}";
             lblToplam.Text = $"{Session.ToplamHacim:F2} m³";
