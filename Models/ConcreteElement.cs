@@ -33,7 +33,8 @@ namespace BetonMetraj.Models
 
         public override string ToString()
         {
-            return $"{ElemanTipi} - {Etiket} [{BetonHacmi:F3} m³]";
+            string adGoster = !string.IsNullOrEmpty(Ad) ? Ad : Etiket;
+            return $"{ElemanTipi} - {adGoster} [{BetonHacmi:F3} m³]";
         }
     }
 
