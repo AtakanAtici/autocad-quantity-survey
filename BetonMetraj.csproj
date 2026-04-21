@@ -33,9 +33,6 @@
     <Page Include="UI\Dialogs\BlokDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="UI\Dialogs\BlokDialog.xaml.cs">
-      <DependentUpon>UI\Dialogs\BlokDialog.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>
