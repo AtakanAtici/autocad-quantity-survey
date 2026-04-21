@@ -8,7 +8,9 @@ namespace BetonMetraj.Models
     public class ConcreteElement
     {
         public string Id { get; set; } = string.Empty;
+        public string Ad { get; set; } = string.Empty;
         public string Etiket { get; set; } = string.Empty;
+        public string Aciklama { get; set; } = string.Empty;
         public ElementType ElemanTipi { get; set; }
 
         /// <summary>AutoCAD Layer adı</summary>
